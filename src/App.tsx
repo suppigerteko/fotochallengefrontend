@@ -1,26 +1,55 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import * as React from "react";
+import "semantic-ui-css/semantic.min.css";
+import { Menu } from "semantic-ui-react";
+import Signup from "./SignUp";
 
-function App() {
+export function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+        margin: "20px",
+      }}
+    >
+      <Menu
+        inverted
+        color="blue"
+        borderless
+        style={{
+          flexShrink: 0,
+          borderRadius: 0,
+          margin: 0,
+        }}
+      >
+        <Menu.Item as="h1" header>
+          Foto Challenge
+        </Menu.Item>
+      </Menu>
+
+      <div
+        style={{
+          margin: "20px",
+        }}
+      >
+        <h1>Herzlich Willkommen</h1>
+        <h2>Benutzer hinzufügen</h2>
+        <Signup />
+      </div>
+
+      <Menu
+        inverted
+        color="blue"
+        borderless
+        style={{
+          flexShrink: 0,
+          borderRadius: 0,
+          margin: 0,
+        }}
+      >
+        <Menu.Item header>Roman Suppiger</Menu.Item>
+      </Menu>
     </div>
   );
 }
-
-export default App;

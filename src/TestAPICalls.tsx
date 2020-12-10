@@ -23,6 +23,9 @@ const TestAddDeleteGetUpdate = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [deleteName, setDeleteName] = useState("");
+  const [oldEditName, setOldEditName] = useState("");
+  const [editName, setEditName] = useState("");
+  const [editEmail, setEditEmail] = useState("");
 
   const refetch = () => {
     axios.get("http://127.0.0.1:5000/").then(function (response) {
@@ -55,8 +58,23 @@ const TestAddDeleteGetUpdate = () => {
       .then(() => refetch());
   };
 
+  const body = {
+    oldEditName: oldEditName,
+    editName: editName,
+    editEmail: editEmail,
+  };
+
+  const editUser = (e: any) => {
+    e.preventDefault();
+    console.log(body);
+    axios
+      .put("http://127.0.0.1:5000/update-users", body, {})
+      .then(() => refetch());
+  };
+
   return (
     <>
+      <h1>Simples Testen der API Calls</h1>
       <h2>Benutzer hinzufügen</h2>
       <Form>
         <Form.Field>
@@ -116,6 +134,41 @@ const TestAddDeleteGetUpdate = () => {
           ))}
         </Table.Body>
       </Table>
+
+      <h2>Benutzer editieren </h2>
+      <Form>
+        <Form.Field>
+          <label>Alter Name</label>
+          <input
+            placeholder="Alter Name"
+            value={oldEditName}
+            onChange={(e) => setOldEditName(e.target.value)}
+            required
+          />
+        </Form.Field>
+        <Form.Field>
+          <label>Neuer Name</label>
+          <input
+            placeholder="Neuer Name"
+            value={editName}
+            onChange={(e) => setEditName(e.target.value)}
+            required
+          />
+        </Form.Field>
+        <Form.Field>
+          <label>Email</label>
+          <input
+            placeholder="Email"
+            type="text"
+            value={editEmail}
+            onChange={(e) => setEditEmail(e.target.value)}
+            required
+          />
+        </Form.Field>
+        <Button type="submit" onClick={editUser}>
+          Benutzer editieren
+        </Button>
+      </Form>
     </>
   );
 };

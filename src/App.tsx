@@ -1,7 +1,7 @@
 import * as React from "react";
 import "semantic-ui-css/semantic.min.css";
 import { Menu } from "semantic-ui-react";
-import TestAddDeleteGetUpdate from "./SignUp";
+import TestAddDeleteGetUpdate from "./TestAPICalls";
 
 export function App() {
   return (

@@ -1,7 +1,7 @@
 import * as React from "react";
 import "semantic-ui-css/semantic.min.css";
 import { Menu } from "semantic-ui-react";
-import Signup from "./SignUp";
+import TestAddDeleteGetUpdate from "./SignUp";
 
 export function App() {
   return (
@@ -34,8 +34,7 @@ export function App() {
         }}
       >
         <h1>Herzlich Willkommen</h1>
-        <h2>Benutzer hinzufügen</h2>
-        <Signup />
+        <TestAddDeleteGetUpdate />
       </div>
 
       <Menu

@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import * as React from "react";
 import { Container, Menu } from "semantic-ui-react";
+import { Login } from "./Login";
 import { SignUp } from "./SignUp";
+import { useState } from "react";
+import { Home } from "./HomeNotAuthenticated";
 
 enum NavMenu {
   Home = "Home",
@@ -8,7 +11,9 @@ enum NavMenu {
   Register = "Register",
 }
 
-export function MainMenu() {
+interface NotAuthenticatedProps {}
+
+export function NotAuthenticated(p: NotAuthenticatedProps) {
   const [menu, setMenu] = useState<NavMenu>(NavMenu.Home);
   return (
     <>
@@ -22,21 +27,27 @@ export function MainMenu() {
         </Container>
       </Menu>
       <Container style={{ marginTop: "4em" }}>
-        <MainPage activePage={menu} />
+        <MainPage
+          activePage={menu}
+          openLogin={() => setMenu(NavMenu.Login)}
+          openRegister={() => setMenu(NavMenu.Register)}
+        />
       </Container>
     </>
   );
 }
 
-interface MainPageProps {
+export interface MainPageProps {
   activePage: NavMenu;
+  openLogin: () => void;
+  openRegister: () => void;
 }
 function MainPage(p: MainPageProps) {
   switch (p.activePage) {
     case NavMenu.Home:
-      return null;
+      return <Home {...p} />;
     case NavMenu.Login:
-      return null;
+      return <Login />;
     case NavMenu.Register:
       return <SignUp />;
   }

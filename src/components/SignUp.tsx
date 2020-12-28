@@ -1,7 +1,8 @@
 import * as React from "react";
 import { Form, Button } from "semantic-ui-react";
-import { SyntheticEvent, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
+import { passwordMinimumLength } from "./Login";
 
 interface User {
   firstName: string;
@@ -20,16 +21,38 @@ export function SignUp() {
 
   const [success, setSuccess] = useState(false);
 
-  const registerUser = (e: SyntheticEvent) => {
+  async function registerUser(e: React.MouseEvent<HTMLElement>) {
     e.preventDefault();
-    // get our form data out of state
 
-    axios
-      .post("http://127.0.0.1:5000/register-user", { userData })
-      .then((result) => {
-        setSuccess(true);
-      });
-  };
+    try {
+      await axios.post("http://127.0.0.1:5000/register-user", { userData });
+      setSuccess(true);
+    } catch (error) {
+      if (error.response) {
+        /*
+          The request was made and the server responded with a
+          status code that falls out of the range of 2xx
+         */
+      } else if (error.request) {
+        /*
+        The request was made but no response was received, `error.request`
+         is an instance of XMLHttpRequest in the browser and an instance
+         of http.ClientRequest in Node.js
+         */
+      } else {
+        // Something happened in setting up the request and triggered an Error
+      }
+    }
+  }
+
+  const passwordToShort = passwordMinimumLength(userData.password);
+
+  const buttonDisabled =
+    !userData.email ||
+    !userData.firstName ||
+    !userData.lastName ||
+    !userData.password ||
+    passwordToShort;
 
   return (
     <>
@@ -79,7 +102,18 @@ export function SignUp() {
               placeholder="Password"
             />
           </Form.Field>
-          <Button type="submit" onClick={registerUser}>
+          {passwordToShort && userData.password ? (
+            <p style={{ color: "red" }}>
+              Password minimum length is 6 Characters
+            </p>
+          ) : (
+            ""
+          )}
+          <Button
+            type="submit"
+            onClick={registerUser}
+            disabled={buttonDisabled}
+          >
             Register
           </Button>
         </Form>
